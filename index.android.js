@@ -43,13 +43,14 @@ const reducer = createStore(undefined, {
     ...prevState,
     todo: prevState.todo.concat(action.data)
   }),
-  [EVENTS.COMPLETE_TASK]: (prevState, action) => ({
-    ...prevState,
-    todo: prevState.todo.map((item, ind) => {
-      if (ind === action.index) 
-        item.isCompleted = !item.isCompleted
-    })
-  }),
+  [EVENTS.COMPLETE_TASK]: (prevState, action) => {
+     todoNew = prevState.todo.slice()
+     todoNew[action.index].isCompleted = !todoNew[action.index].isCompleted
+     return ({
+       ...prevState,
+       todo: todoNew
+     })
+  },
   [EVENTS.CLEAR_TODO]: (prevState, action) => ({
     ...prevState,
     todo: []
@@ -107,6 +108,7 @@ export default class reactrealm extends Component {
 
   render() {
     console.log("Called render")
+    console.log(this.state)
     return (
       <Container>
         {Myheader}
